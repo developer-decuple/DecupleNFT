@@ -23,7 +23,7 @@ Table of contents:
 Contract address: 0x7f9D666653c4Beda0E402B5B35D33FfF7b41B186
 
 
-Contract source code [here](Smart Contract Source Code/DecupleNFTcontract.sol).
+Contract source code [here]([Smart Contract Source Code/DecupleNFTcontract.sol](https://github.com/developer-decuple/DecupleNFT/blob/main/Smart%20Contract%20Source%20Code/DecupleNFTcontract.sol)).
 
 
 Contract ABI here.
