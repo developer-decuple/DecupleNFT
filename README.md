@@ -26,7 +26,7 @@ Contract address: 0x7f9D666653c4Beda0E402B5B35D33FfF7b41B186
 Contract source code [here](https://github.com/developer-decuple/DecupleNFT/blob/main/Smart%20Contract%20Source%20Code/DecupleNFTcontract.sol).
 
 
-Contract ABI here.
+Contract ABI [here](https://github.com/developer-decuple/DecupleNFT/blob/main/ABI/NFT-ABI.txt).
 
 
 ## Decuple NFT Agent
@@ -34,10 +34,10 @@ Contract ABI here.
 Contract address: 0x7f9D666653c4Beda0E402B5B35D33FfF7b41B186
 
 
-Contract source code here.
+Contract source code [here](https://github.com/developer-decuple/DecupleNFT/blob/main/Smart%20Contract%20Source%20Code/DecupleAgentContract.sol).
 
 
-Contract ABI here.
+Contract ABI [here](https://github.com/developer-decuple/DecupleNFT/blob/main/ABI/Agent-ABI.txt).
 
 
 
@@ -46,10 +46,10 @@ Contract ABI here.
 Contract address: 0x7f9D666653c4Beda0E402B5B35D33FfF7b41B186
 
 
-Contract source code here.
+Contract source code [here](https://github.com/developer-decuple/DecupleNFT/blob/main/Smart%20Contract%20Source%20Code/DecupleBonus.sol).
 
 
-Contract ABI here.
+Contract ABI [here](https://github.com/developer-decuple/DecupleNFT/blob/main/ABI/Bonus-ABI.txt).
 
 
 
@@ -59,7 +59,7 @@ Contract ABI here.
 Contract address: 0x7f9D666653c4Beda0E402B5B35D33FfF7b41B186
 
 
-Contract source code here.
+Contract source code [here](https://github.com/developer-decuple/DecupleNFT/blob/main/Smart%20Contract%20Source%20Code/DCO.sol).
 
 
-Contract ABI here.
+Contract ABI [here](https://github.com/developer-decuple/DecupleNFT/blob/main/ABI/DCO-ABI.txt).
