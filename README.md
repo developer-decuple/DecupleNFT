@@ -20,10 +20,13 @@ We welcome your feedback and suggestions.
 ## DecupleNFT Smart Contract Ecosystem
 The Decuple project is built on four interconnected smart contracts:
 
-Decuple BEP-721: This is the main contract for managing and minting NFTs (unique digital assets) within the Decuple ecosystem.
-Agent Contract: This contract acts as a manager, handling payments and overseeing the NFT minting process.
-Bonus Contract: This contract tracks referrals and distributes rewards in the form of DCO tokens to users who refer others and potentially mint NFTs themselves.
-DCO BEP-20: This is the Decuple project's native token (DCO). It's used for various purposes within the ecosystem, including paying referral rewards and potentially distributing airdrops.
+**Decuple BEP-721:** This is the main contract for managing and minting NFTs (unique digital assets) within the Decuple ecosystem.
+
+**Agent Contract:** This contract acts as a manager, handling payments and overseeing the NFT minting process.
+
+**Bonus Contract:** This contract tracks referrals and distributes rewards in the form of DCO tokens to users who refer others and potentially mint NFTs themselves.
+
+**DCO BEP-20:** This is the Decuple project's native token (DCO). It's used for various purposes within the ecosystem, including paying referral rewards and potentially distributing airdrops.
 
 <!-- 
 Table of contents:
