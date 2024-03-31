@@ -28,12 +28,7 @@ The Decuple project is built on four interconnected smart contracts:
 
 **DCO BEP-20:** This is the Decuple project's native token (DCO). It's used for various purposes within the ecosystem, including paying referral rewards and potentially distributing airdrops.
 
-<!-- 
-Table of contents:
-1. Decuple NFT BEP-721 Smart contract 
-2. Decuple NFT Agent Smart contract 
-3. Decuple NFT Bonus Smart contract 
-4. DCO token BEP-20 Smart contract  -->
+
 
 
 ## Decuple NFT BEP-721 Smart contract 
@@ -105,7 +100,6 @@ Official telegram: [https://t.me/decuplenft](https://t.me/decuplenft)
 
 Team leader: [admin@lenzolab.com](mailto:admin@lenzolab.com)
 
-Dev : developer@decuplenft.com
-<!-- Opensea collection: [Collection](---) -->
+Dev : [developer@decuplenft.com](mailto:developer@decuplenft.com)
 
 
