@@ -7,10 +7,10 @@ Decuple NFT project specifications and information.
 
 This project is currently deployed on a Binance Smart Chain (BSC) testnet for review and technical approval for launch on the Binance mainnet.  
 
-The following functionalities are currently under development and testing:
 
-* Feature X 
-* Feature Y
+All functionalities of the four smart contracts are under testing.
+
+
 
 We welcome your feedback and suggestions.
 
