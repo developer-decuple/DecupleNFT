@@ -82,6 +82,6 @@ Whitepaper: [whitepaper.decuplenft.com](https://whitepaper.decuplenft.com)
 
 Official telegram: [https://t.me/decuplenft](https://t.me/decuplenft)
 
-Opensea collection: [Collection](---)
+<!-- Opensea collection: [Collection](---) -->
 
 
