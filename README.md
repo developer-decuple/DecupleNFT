@@ -20,7 +20,7 @@ Table of contents:
 
 ## Decuple NFT BEP-721 Smart contract 
 
-Contract address: 0x7f9D666653c4Beda0E402B5B35D33FfF7b41B186
+Contract address: [0x7f9D666653c4Beda0E402B5B35D33FfF7b41B186](https://testnet.bscscan.com/address/0x7f9D666653c4Beda0E402B5B35D33FfF7b41B186)
 
 
 Contract source code [here](https://github.com/developer-decuple/DecupleNFT/blob/main/Smart%20Contract%20Source%20Code/DecupleNFTcontract.sol).
@@ -31,7 +31,7 @@ Contract ABI [here](https://github.com/developer-decuple/DecupleNFT/blob/main/AB
 
 ## Decuple NFT Agent
 
-Contract address: 0x7f9D666653c4Beda0E402B5B35D33FfF7b41B186
+Contract address: [0xAD4a12fd449e9Ae3d7e9E9cd089C49524eF58337](https://testnet.bscscan.com/address/0xAD4a12fd449e9Ae3d7e9E9cd089C49524eF58337)
 
 
 Contract source code [here](https://github.com/developer-decuple/DecupleNFT/blob/main/Smart%20Contract%20Source%20Code/DecupleAgentContract.sol).
@@ -43,7 +43,7 @@ Contract ABI [here](https://github.com/developer-decuple/DecupleNFT/blob/main/AB
 
 ## Decuple Referral Bonus
 
-Contract address: 0x7f9D666653c4Beda0E402B5B35D33FfF7b41B186
+Contract address: [0xEFeB1Ee21eE114eC51229A92DC4aa23318cc2999](https://testnet.bscscan.com/address/0xEFeB1Ee21eE114eC51229A92DC4aa23318cc2999)
 
 
 Contract source code [here](https://github.com/developer-decuple/DecupleNFT/blob/main/Smart%20Contract%20Source%20Code/DecupleBonus.sol).
@@ -56,7 +56,7 @@ Contract ABI [here](https://github.com/developer-decuple/DecupleNFT/blob/main/AB
 
 ## DCO BEP-20
 
-Contract address: 0x7f9D666653c4Beda0E402B5B35D33FfF7b41B186
+Contract address: [0xA7A1CEe5aa198838A111C7b0930617FA617C78d9](https://testnet.bscscan.com/address/0xA7A1CEe5aa198838A111C7b0930617FA617C78d9)
 
 
 Contract source code [here](https://github.com/developer-decuple/DecupleNFT/blob/main/Smart%20Contract%20Source%20Code/DCO.sol).
