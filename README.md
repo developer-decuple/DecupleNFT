@@ -3,6 +3,21 @@ Decuple NFT project specifications and information.
 
 
 
+## For Reviewers
+
+This project is currently deployed on a Binance Smart Chain (BSC) testnet for review and technical approval for launch on the Binance mainnet.  
+
+The following functionalities are currently under development and testing:
+
+* Feature X 
+* Feature Y
+
+We welcome your feedback and suggestions.
+
+
+
+
+
 The Decuple project is built on four interconnected smart contracts:
 
 Decuple BEP-721: This is the main contract for managing and minting NFTs (unique digital assets) within the Decuple ecosystem.
