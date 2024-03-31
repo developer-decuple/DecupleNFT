@@ -17,7 +17,7 @@ We welcome your feedback and suggestions.
 
 
 
-
+## DecupleNFT Smart Contract Ecosystem
 The Decuple project is built on four interconnected smart contracts:
 
 Decuple BEP-721: This is the main contract for managing and minting NFTs (unique digital assets) within the Decuple ecosystem.
