@@ -100,6 +100,12 @@ Whitepaper: [whitepaper.decuplenft.com](https://whitepaper.decuplenft.com)
 
 Official telegram: [https://t.me/decuplenft](https://t.me/decuplenft)
 
+
+### Direct contact:
+
+Team leader: [admin@lenzolab.com](mailto:admin@lenzolab.com)
+
+Dev : developer@decuplenft.com
 <!-- Opensea collection: [Collection](---) -->
 
 
