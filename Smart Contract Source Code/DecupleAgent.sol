@@ -5,26 +5,13 @@ pragma solidity ^0.8.20;
 //import "@openzeppelin/contracts@5.0.2/token/ERC20/ERC20.sol";
 
 
+/**
+ * @title Agent Contract
+ * @author Lenzolab Development team - matthewshelb@gmail.com
+ * @notice This contract manages price payment and mint the Decuple NFT project.
+ * @dev It interacts with the Decuple NFT contract, USDT ERC-20 and an Decuple Bonus contract.
+ */
 contract Agent { 
-
-    /**
-    * @dev Price of minting one NFT.
-    */
-    uint256 public price1 = 100000000000000000; // 0.1 
-
-
-    /**
-    * @dev Price of minting three NFTs at the same time.
-    */
-    uint256 public price3 = 200000000000000000; // 0.2 
-
-    
-    /**
-    * @dev Price of minting five NFTs at the same time.
-    */
-    uint256 public price5 = 300000000000000000; // 0.3
-
-
         
     /**
     * @dev Address of the ERC20 token used for minting payments. 
@@ -33,17 +20,18 @@ contract Agent {
     address public usdtAddress = 0x337610d27c682E347C9cD60BD4b3b107C9d34dDd; // USDT
     ERC20 _token;
 
+
     /**
     * @dev Address of the deployed ERC-721 NFT contract used for minting NFTs.
     */
-    address public _nftContractAddress = 0x7f9D666653c4Beda0E402B5B35D33FfF7b41B186; // Decuple NFT
+    address public _nftContractAddress = 0x87F89CE4b499FB7330958406e3dF8D2FAB8D654F; // Decuple NFT
     NFT _nft;
 
 
     /**
     * @dev Address of the deployed Bonus contract used for paying referral bonuses.
     */
-    address public _bonusContract = 0xdBcA65490D0572657Ad8dF803ED95aF01afbD775; // Decuple Bonus Manager
+    address public _bonusContract = 0xEFeB1Ee21eE114eC51229A92DC4aa23318cc2999; // Decuple Bonus Manager
     Bonus _bonus;
 
 
@@ -58,33 +46,72 @@ contract Agent {
     * @dev Flag indicating whether the referral program is active.
     * When enabled, users can mint NFTs with a referral bonus.
     */
-    bool private _referralProgram; 
+    bool public _referralProgram; 
+
 
     /**
     * @dev Address of the contract owner.
     * The owner has special privileges to manage the contract.
     */
-    address private immutable _owner;
+    address private _owner;
 
 
     /**
-    * @dev List of reserve addresses where the minting fees are distributed.
-    * The order of addresses in this list corresponds to the order of percentages 
-    * defined in `portions1`, `portions3`, and `portions5`.
+    * @dev Price of minting one NFT.
     */
-    address[] private reserves = [0xf1ccEA469D75BC034034C1464542bB5CDC5515c2,0x9E62609A54b91Db49dd04277bbAcB25432fb8325];
+    uint256 public price1 = 100000000000000000; // 0.1 USDT
+
+
+    /**
+    * @dev Price of minting three NFTs at the same time.
+    */
+    uint256 public price3 = 200000000000000000; // 0.2 USDT
+
+    
+    /**
+    * @dev Price of minting five NFTs at the same time.
+    */
+    uint256 public price5 = 300000000000000000; // 0.3 USDT
+
 
     /**
     * @dev Distribution percentages for reserve addresses when minting 1, 3, or 5 NFTs respectively.
     * Each element in the array corresponds to a reserve address in the `reserves` list.
     * The sum of all percentages in an array should be equal to 100 (100%).
     */
-    uint256[] private portions1 = [70000000000000000,30000000000000000];     // 70% - 30%
-    uint256[] private portions3 = [140000000000000000,60000000000000000];    // 70% - 30%
-    uint256[] private portions5 = [210000000000000000,90000000000000000];    // 70% - 30%
+    mapping(uint8 => uint256[])  private portions;
 
 
-    // set reservs and portions
+    /**
+    * @dev List of reserve addresses where the minting fees are distributed.
+    * The order of addresses in this list corresponds to the order of percentages 
+    * defined in `portions[0]` to `portions[9]`.
+    */
+    address[] private reserves = [
+        0xf1ccEA469D75BC034034C1464542bB5CDC5515c2,
+        0x9E62609A54b91Db49dd04277bbAcB25432fb8325,
+        0xf1ccEA469D75BC034034C1464542bB5CDC5515c2,
+        0xf1ccEA469D75BC034034C1464542bB5CDC5515c2,
+        0xf1ccEA469D75BC034034C1464542bB5CDC5515c2,
+        0xf1ccEA469D75BC034034C1464542bB5CDC5515c2,
+        0xf1ccEA469D75BC034034C1464542bB5CDC5515c2,
+        0xf1ccEA469D75BC034034C1464542bB5CDC5515c2,
+        0xf1ccEA469D75BC034034C1464542bB5CDC5515c2,
+        0xf1ccEA469D75BC034034C1464542bB5CDC5515c2];
+
+
+    
+    
+    // Managerial Seetings
+    
+
+        /**
+        * @dev Chenges the contract owner.
+        * The owner has special privileges to manage the contract.
+        */
+        function changeOwner(address newOwner) public onlyOwner {
+            _owner = newOwner;
+        }
 
     
         /**
@@ -92,43 +119,37 @@ contract Agent {
         *
         */
         function setReserves(address[] memory newReserves) public onlyOwner returns(bool){
+            require(newReserves.length == 10, "Array length is not valid.");
             reserves = newReserves;
             return true;
         }
-
-
-        /**
-        * @dev Updates the distribution portions for the reserve addresses when minting 1 NFT. Only the owner can call this function.
-        *
-        */
-        function setPortions1(uint256[] memory newportions) public onlyOwner returns(bool){
-            portions1 = newportions;
-            return true;
-        }
-
-
+ 
 
         /**
-        * @dev Updates the distribution portions for the reserve addresses when minting 3 NFTs. Only the owner can call this function.
+        * @dev Updates the distribution portions for the reserve addresses. 
         *
         */
-        function setPortions3(uint256[] memory newportions) public onlyOwner returns(bool){
-            portions3 = newportions;
-            return true;
+        function setPortions(uint8 count, uint256[] memory newPortions) public onlyOwner returns (bool){
+            require(newPortions.length == 10, "Array length is not valid.");
+            uint256 total = 0;
+            for (uint256 i = 0; i < newPortions.length; i++) 
+            {
+                total += newPortions[i];
+            }
+            if(count == 1 && total == price1){
+                portions[count] = newPortions;
+                return true;
+            }
+            if(count == 3 && total == price3){
+                portions[count] = newPortions;
+                return true;
+            }
+            if(count == 5 && total == price5){
+                portions[count] = newPortions;
+                return true;
+            }
+            revert("Not a valid price array or count.");
         }
-
-
-
-        /**
-        * @dev Updates the distribution portions for the reserve addresses when minting 5 NFTs. Only the owner can call this function.
-        *
-        */
-        function setPortions5(uint256[] memory newportions) public onlyOwner returns(bool){
-            portions5 = newportions;
-            return true;
-        }
-
-
 
         /**
         * @dev Disables the referral program. Only the owner can call this function.
@@ -158,16 +179,6 @@ contract Agent {
             _nft = NFT(adr);
         }
 
-        /**
-        * @dev Returns the address of the currently deployed NFT contract.
-        *
-        */
-        function getNFTContractAddress() public view returns (address){
-            return _nftContractAddress;
-        }
-    //
-
-    //Set Bonus Contract
 
         /**
         * @dev Updates the address of the deployed Bonus contract. Only the owner can call this function.
@@ -179,13 +190,38 @@ contract Agent {
             return true;
         }
 
+
+        
         /**
-        * @dev Returns the address of the currently deployed Bonus contract.
+        * @dev Updates the prices for minting 1, 3, or 5 NFTs. Only the owner can call this function
         *
         */
-        function getBonusContractAddress() public view returns (address){
-            return _bonusContract;
+        function setMintPrices(uint256[] memory prices) public onlyOwner returns (bool){
+            require(prices.length == 3, "Array length is not valid.");
+            price1    = prices[0];
+            price3    = prices[1];
+            price5    = prices[2];
+            return true;
         }
+
+
+        /**
+        * @dev Pauses the contract, preventing any minting actions. Only the owner can call this function.
+        *
+        */
+        function pause() public onlyOwner{
+            _paused = true;
+        }
+        
+
+        /**
+        * @dev Unpauses the contract, allowing minting actions to resume. Only the owner can call this function.
+        *
+        */
+        function unpause()  public onlyOwner{
+            _paused = false;
+        }
+
     //
 
     constructor(){
@@ -194,7 +230,12 @@ contract Agent {
         _referralProgram = true;
         _nft = NFT(_nftContractAddress);
         _token = ERC20(usdtAddress);
-        
+        _bonus = Bonus(_bonusContract);       
+
+        portions[1] = [10000000000000000, 10000000000000000, 10000000000000000, 10000000000000000, 10000000000000000, 10000000000000000, 10000000000000000, 10000000000000000, 10000000000000000, 10000000000000000];    // 10% each
+        portions[3] = [20000000000000000, 20000000000000000, 20000000000000000, 20000000000000000, 20000000000000000, 20000000000000000, 20000000000000000, 20000000000000000, 20000000000000000, 20000000000000000];    // 10% each
+        portions[5] = [30000000000000000, 30000000000000000, 30000000000000000, 30000000000000000, 30000000000000000, 30000000000000000, 30000000000000000, 30000000000000000, 30000000000000000, 30000000000000000];    // 10% each
+   
     }
 
 
@@ -207,23 +248,19 @@ contract Agent {
         *
         */
         function mint1() public whenNotPaused returns(bool){
-            bool p0 = _token.transferFrom(msg.sender,reserves[0],portions1[0]);
-            bool p1 = _token.transferFrom(msg.sender,reserves[1],portions1[1]);
-            require(p0 && p1);
+            require(payPrice(msg.sender, 1), "Unable to pay the price.");
             uint256 id = _nft.safeMint(msg.sender);
             emit  mint(msg.sender, id);
             return true;
         }
-        
+
         
         /**
         * @dev Mints three NFTs to the caller after transferring the required amount of USDT from the caller's wallet to the reserve addresses.
         *
         */
         function mint3() public whenNotPaused returns(bool){
-            bool p0 = _token.transferFrom(msg.sender,reserves[0],portions3[0]);
-            bool p1 = _token.transferFrom(msg.sender,reserves[1],portions3[1]);
-            require(p0 && p1);
+            require(payPrice(msg.sender, 3), "Unable to pay the price.");
             uint256 id1 = _nft.safeMint(msg.sender);
             emit  mint(msg.sender, id1);
             uint256 id2 = _nft.safeMint(msg.sender);
@@ -238,9 +275,7 @@ contract Agent {
         *
         */  
         function mint5() public whenNotPaused returns(bool){
-            bool p0 = _token.transferFrom(msg.sender,reserves[0],portions5[0]);
-            bool p1 = _token.transferFrom(msg.sender,reserves[1],portions5[1]);
-            require(p0 && p1);
+            require(payPrice(msg.sender, 5), "Unable to pay the price.");
             uint256 id1 = _nft.safeMint(msg.sender);
             emit  mint(msg.sender, id1);
             uint256 id2 = _nft.safeMint(msg.sender);
@@ -267,9 +302,7 @@ contract Agent {
         function mint1R(address referrer) public whenNotPaused returns(bool){
             require(msg.sender != referrer, "Referrer and Sender cant be the same.");
 
-            bool p0 = _token.transferFrom(msg.sender,reserves[0],portions1[0]);
-            bool p1 = _token.transferFrom(msg.sender,reserves[1],portions1[1]);
-            require(p0 && p1);
+            require(payPrice(msg.sender, 1), "Unable to pay the price.");
             uint256[] memory news = new uint256[](1);
 
         
@@ -294,9 +327,7 @@ contract Agent {
         function mint3R(address referrer) public whenNotPaused returns(bool){
             require(msg.sender != referrer, "Referrer and Sender cant be the same.");
 
-            bool p0 = _token.transferFrom(msg.sender,reserves[0],portions3[0]);
-            bool p1 = _token.transferFrom(msg.sender,reserves[1],portions3[1]);
-            require(p0 && p1);
+            require(payPrice(msg.sender, 3), "Unable to pay the price.");
             uint256[] memory news = new uint256[](3);
 
 
@@ -328,9 +359,7 @@ contract Agent {
         function mint5R(address referrer) public whenNotPaused returns(bool){
             require(msg.sender != referrer, "Referrer and Sender cant be the same.");
 
-            bool p0 = _token.transferFrom(msg.sender,reserves[0],portions5[0]);
-            bool p1 = _token.transferFrom(msg.sender,reserves[1],portions5[1]);
-            require(p0 && p1);
+            require(payPrice(msg.sender, 5), "Unable to pay the price.");
             uint256[] memory news = new uint256[](5);
 
 
@@ -360,64 +389,61 @@ contract Agent {
             }
             return true;
         }
+
     //
 
 
-    // General Functions
-        /**
-        * @dev Returns an array containing the current prices for minting 1, 3, or 5 NFTs.
-        *
-        */
-        function getMintPrices() public view returns (uint256[] memory){
-            uint256[] memory prices = new uint256[](3);
-            prices[0] = price1;
-            prices[1] = price3;
-            prices[2] = price5;
-            return prices;
-        }
 
-
-        /**
-        * @dev Updates the prices for minting 1, 3, or 5 NFTs. Only the owner can call this function
-        *
-        */
-        function setMintPrices(uint256[] memory prices) public onlyOwner returns (bool){
-            price1    = prices[0];
-            price3    = prices[1];
-            price5    = prices[2];
+    /**
+    * @dev Transfers the price of mint.
+    *
+    */
+    function payPrice(address sender, uint8 count) private returns (bool){
+        uint256[] memory pors = portions[count];
+        bool p0 = _token.transferFrom(sender, reserves[0], pors[0]);
+        bool p1 = _token.transferFrom(sender, reserves[1], pors[1]);
+        bool p2 = _token.transferFrom(sender, reserves[2], pors[2]);
+        bool p3 = _token.transferFrom(sender, reserves[3], pors[3]);
+        bool p4 = _token.transferFrom(sender, reserves[4], pors[4]);
+        bool p5 = _token.transferFrom(sender, reserves[5], pors[5]);
+        bool p6 = _token.transferFrom(sender, reserves[6], pors[6]);
+        bool p7 = _token.transferFrom(sender, reserves[7], pors[7]);
+        bool p8 = _token.transferFrom(sender, reserves[8], pors[8]);
+        bool p9 = _token.transferFrom(sender, reserves[9], pors[9]);
+        if(p0 && p1 && p2 && p3 && p4 && p5 && p6 && p7 && p8 && p9 ){
             return true;
+        }else{
+            return false;
         }
+    }
+
+
+    /**
+    * @dev Returns an array containing the current prices for minting 1, 3, or 5 NFTs.
+    *
+    */
+    function getMintPrices() public view returns (uint256[] memory){
+        uint256[] memory prices = new uint256[](3);
+        prices[0] = price1;
+        prices[1] = price3;
+        prices[2] = price5;
+        return prices;
+    }
 
 
 
-        /**
-        * @dev Pauses the contract, preventing any minting actions. Only the owner can call this function.
-        *
-        */
-        function pause() public onlyOwner{
-            _paused = true;
-        }
-        
-        /**
-        * @dev Unpauses the contract, allowing minting actions to resume. Only the owner can call this function.
-        *
-        */
-        function unpause()  public onlyOwner{
-            _paused = false;
-        }
 
 
-
-        /**
-        * @dev Custom modifier to restrict function calls to the contract owner.
-        * This modifier checks if the message sender (`msg.sender`) matches the `_owner` address stored in the contract.
-        * If the condition is not met, the function execution reverts.
-        * Functions requiring owner privileges (e.g., `setDCO`, `pause/unpause`, `sendDCO`) should be decorated with this modifier.
-        */
-        modifier onlyOwner() {
-            require(msg.sender == _owner);
-            _;
-        }
+    /**
+    * @dev Custom modifier to restrict function calls to the contract owner.
+    * This modifier checks if the message sender (`msg.sender`) matches the `_owner` address stored in the contract.
+    * If the condition is not met, the function execution reverts.
+    * Functions requiring owner privileges (e.g., `setDCO`, `pause/unpause`, `sendDCO`) should be decorated with this modifier.
+    */
+    modifier onlyOwner() {
+        require(msg.sender == _owner);
+        _;
+    }
 
 
     /**

@@ -28,15 +28,16 @@ The Decuple project is built on four interconnected smart contracts:
 
 **DCO BEP-20:** This is the Decuple project's native token (DCO). It's used for various purposes within the ecosystem, including paying referral rewards and potentially distributing airdrops.
 
+**Note:** All four smart contracts have been compiled using the Shanghai EVM and deployed on the Binance Smart Chain (BSC) Testnet.
 
 
 
 ## Decuple NFT BEP-721 Smart contract 
 
-Contract address: [0x7f9D666653c4Beda0E402B5B35D33FfF7b41B186](https://testnet.bscscan.com/address/0x7f9D666653c4Beda0E402B5B35D33FfF7b41B186)
+Contract address: [0xD5096f1dc326413EAa0b33f6e8bf3B134222738f](https://testnet.bscscan.com/address/0xD5096f1dc326413EAa0b33f6e8bf3B134222738f)
 
 
-Contract source code [here](https://github.com/developer-decuple/DecupleNFT/blob/main/Smart%20Contract%20Source%20Code/DecupleNFTcontract.sol).
+Contract source code [here](https://github.com/developer-decuple/DecupleNFT/blob/main/Smart%20Contract%20Source%20Code/DecupleNFT.sol).
 
 
 Contract ABI [here](https://github.com/developer-decuple/DecupleNFT/blob/main/ABI/NFT-ABI.txt).
@@ -46,10 +47,12 @@ Contract ABI [here](https://github.com/developer-decuple/DecupleNFT/blob/main/AB
 
 ## Decuple NFT Agent
 
-Contract address: [0xAD4a12fd449e9Ae3d7e9E9cd089C49524eF58337](https://testnet.bscscan.com/address/0xAD4a12fd449e9Ae3d7e9E9cd089C49524eF58337)
+**Note:** Mint price will be 1000 USDT and reserve address will be defferent on the mainnet. 
+
+Contract address: [0x8Fc319929e4A1EBE7A58b5f86ADDd958026A493a](https://testnet.bscscan.com/address/0x8Fc319929e4A1EBE7A58b5f86ADDd958026A493a)
 
 
-Contract source code [here](https://github.com/developer-decuple/DecupleNFT/blob/main/Smart%20Contract%20Source%20Code/DecupleAgentContract.sol).
+Contract source code [here](https://github.com/developer-decuple/DecupleNFT/blob/main/Smart%20Contract%20Source%20Code/DecupleAgent.sol).
 
 
 Contract ABI [here](https://github.com/developer-decuple/DecupleNFT/blob/main/ABI/Agent-ABI.txt).
@@ -60,7 +63,7 @@ Contract ABI [here](https://github.com/developer-decuple/DecupleNFT/blob/main/AB
 
 ## Decuple Referral Bonus
 
-Contract address: [0xEFeB1Ee21eE114eC51229A92DC4aa23318cc2999](https://testnet.bscscan.com/address/0xEFeB1Ee21eE114eC51229A92DC4aa23318cc2999)
+Contract address: [0x313Ebc4eCf4326Be20f15F1cAbA2858028D33252](https://testnet.bscscan.com/address/0x313Ebc4eCf4326Be20f15F1cAbA2858028D33252)
 
 
 Contract source code [here](https://github.com/developer-decuple/DecupleNFT/blob/main/Smart%20Contract%20Source%20Code/DecupleBonus.sol).

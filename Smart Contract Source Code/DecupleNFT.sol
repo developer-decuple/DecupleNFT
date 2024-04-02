@@ -2,10 +2,18 @@
 // Compatible with OpenZeppelin Contracts ^5.0.0
 pragma solidity ^0.8.20;
 
+
 import "@openzeppelin/contracts@5.0.2/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts@5.0.2/token/ERC721/extensions/ERC721Pausable.sol";
 import "@openzeppelin/contracts@5.0.2/access/Ownable.sol";
 
+
+/**
+ * @title Decuple NFT ERC-721
+ * @author Lenzolab Development team - matthewshelb@gmail.com
+ * @notice This contract manages tokens for Decuple NFT project.
+ * @dev It interacts with the Decuple Agent contract.
+ */
 contract Decuple is ERC721, ERC721Pausable, Ownable { 
     uint256 private _nextTokenId;
 
@@ -17,7 +25,8 @@ contract Decuple is ERC721, ERC721Pausable, Ownable {
     }  
  
     function _baseURI() internal pure override returns (string memory) {
-        return "https://ipfs.io/ipfs/QmZADDRyuwz8QNFAA6cEpbkbxvZ8qEgb2k1pcetL2zitk2/";
+        return "ipfs://QmQZEpoNiDxhpxLZ5zQqrSJHEimFnxxSAXMy3V1fNYeWW1/";
+        // return "https://ipfs.io/ipfs/QmZADDRyuwz8QNFAA6cEpbkbxvZ8qEgb2k1pcetL2zitk2/";
     }
 
     function pause() public onlyOwner {
@@ -93,6 +102,7 @@ contract Decuple is ERC721, ERC721Pausable, Ownable {
 
 
 // In ERC721 the visibility of the -owners has been changed from private to internal.
+// In ERC721 Int the tokenURI function, the line _requireOwned(tokenId); has been commented.
 // In ERC721 Int the tokenURI function, the part (, ".json") has been added to the return value;
 // Custom variable maxSupply has been added.
 // In safeMint Custome condition id < maxSupply has been Added.

@@ -33,6 +33,7 @@ contract Bonus {
     */
     address public _agent;
 
+
     /**
     * @dev Address of the ERC20 token (DCO) used for referral bonus payments.
     */
@@ -77,8 +78,7 @@ contract Bonus {
     */
     mapping (address => uint256 ) public claimed;
 
-    
- 
+
     /**
     * @dev Array containing the base referral bonus amounts for the referrer in DCO Wei.
     * The index corresponds to the number of NFTs minted in a single transaction (1, 3, or 5).
@@ -106,7 +106,7 @@ contract Bonus {
     constructor(){
         _owner = msg.sender;
         _paused = false;
-        _agent = 0xFb1746a46503981BD92B529fd7a3451dc5D454fa; 
+        _agent = 0x8Fc319929e4A1EBE7A58b5f86ADDd958026A493a; 
         setDCO(0xA7A1CEe5aa198838A111C7b0930617FA617C78d9);
     }
  
@@ -145,7 +145,6 @@ contract Bonus {
         address referrer;
         uint256 timestamp;
     }
-
 
 
     /**
@@ -190,22 +189,20 @@ contract Bonus {
         if(data.ids.length == 1){
             DCO.transfer(data.referrer, referrerBonus[0]);
             DCO.transfer(data.minter, refereeBonus[0]);
-            //recordData(data);
         }
         if(data.ids.length == 3){
             DCO.transfer(data.referrer, referrerBonus[1]);
             DCO.transfer(data.minter, refereeBonus[1]);
-            //recordData(data);
         }        
         if(data.ids.length == 5){
             DCO.transfer(data.referrer, referrerBonus[2]);
             DCO.transfer(data.minter, refereeBonus[2]);
-            //recordData(data);
         }
         recordData(data);
         emit referralBonus(data.minter ,data.referrer, data.ids.length, data.ids );
         return true;
     }
+
 
     /**
     * @dev Public function for a user to claim the speed bonus (if applicable).
@@ -224,7 +221,6 @@ contract Bonus {
     }
 
 
-
     /**
     * @dev View function to retrieve a report of all recorded referral entries.
     * It iterates through the `refIndex` counter and creates an array of `minted` structs,
@@ -240,7 +236,6 @@ contract Bonus {
         }
         return result;
     }
-
 
 
     /**
@@ -268,6 +263,19 @@ contract Bonus {
 
 
     /**
+    * @dev View function to retrieve the array of `refIndex` values associated with a user address.
+    * This function takes an address as input and returns the corresponding array stored in the `referralIndexes` mapping.
+    * This array provides a list of unique identifiers (`refIndex`) for all NFTs minted with a referral bonus
+    * where the specified address acted as the referrer.
+    * @param adr: Address of the user for whom to retrieve `refIndex` values.
+    * @return uint256[]: An array of `refIndex` values for the user's referral entries.
+    */
+    function getReferralIndexesFor(address adr) public view returns( uint256[] memory){
+        return referralIndexes[adr];
+    }
+
+
+    /**
     * @dev Function to set the address of the ERC20 token (DCO) used for bonus payments.
     * This function can only be called by the contract owner.
     * It updates the `DCO` instance variable with the provided address.
@@ -283,19 +291,6 @@ contract Bonus {
 
 
     /**
-    * @dev View function to retrieve the array of `refIndex` values associated with a user address.
-    * This function takes an address as input and returns the corresponding array stored in the `referralIndexes` mapping.
-    * This array provides a list of unique identifiers (`refIndex`) for all NFTs minted with a referral bonus
-    * where the specified address acted as the referrer.
-    * @param adr: Address of the user for whom to retrieve `refIndex` values.
-    * @return uint256[]: An array of `refIndex` values for the user's referral entries.
-    */
-    function getReferralIndexesFor(address adr) public view returns( uint256[] memory){
-        return referralIndexes[adr];
-    }
-
-
-    /**
     * @dev Function to send DCO tokens directly to an address.
     * This function can only be called by the contract owner.
     * It uses the `DCO.transfer` function to transfer the specified amount of DCO tokens to the provided address.
@@ -306,30 +301,6 @@ contract Bonus {
     */
     function sendDCO(address to, uint256 amount) public onlyOwner returns(bool){
         return DCO.transfer(to, amount);
-    }
-
-    /**
-    * @dev Event emitted whenever a referral bonus payment is processed.
-    * This event logs details about the transaction, including:
-    *  - minter: Address of the user who minted the NFTs.
-    *  - referrer: Address of the user who referred the minter (if applicable).
-    *  - count: Number of NFTs minted in the transaction (1, 3, or 5).
-    *  - id: Array of NFT IDs minted in the transaction.
-    */
-    event referralBonus(address indexed minter, address indexed referrer, uint256 count, uint256[] id);
-
-
-    
-    //Custom Modifier
-    /**
-    * @dev Custom modifier to restrict function calls to the authorized agent contract.
-    * This modifier checks if the message sender (`msg.sender`) matches the `_agent` address stored in the contract.
-    * If the condition is not met, the function execution reverts.
-    * Functions requiring agent access (e.g., `payBonus`) should be decorated with this modifier.
-    */
-    modifier onlyAgent() {
-        require(msg.sender == _agent , "Sender is not the _agent.");
-        _;
     }
 
 
@@ -361,6 +332,30 @@ contract Bonus {
     */
     function unpause()  public onlyOwner{
         _paused = false;
+    }
+
+
+    /**
+    * @dev Event emitted whenever a referral bonus payment is processed.
+    * This event logs details about the transaction, including:
+    *  - minter: Address of the user who minted the NFTs.
+    *  - referrer: Address of the user who referred the minter (if applicable).
+    *  - count: Number of NFTs minted in the transaction (1, 3, or 5).
+    *  - id: Array of NFT IDs minted in the transaction.
+    */
+    event referralBonus(address indexed minter, address indexed referrer, uint256 count, uint256[] id);
+
+    
+    //Custom Modifier
+    /**
+    * @dev Custom modifier to restrict function calls to the authorized agent contract.
+    * This modifier checks if the message sender (`msg.sender`) matches the `_agent` address stored in the contract.
+    * If the condition is not met, the function execution reverts.
+    * Functions requiring agent access (e.g., `payBonus`) should be decorated with this modifier.
+    */
+    modifier onlyAgent() {
+        require(msg.sender == _agent , "Sender is not the _agent.");
+        _;
     }
 
 
