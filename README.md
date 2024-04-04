@@ -47,7 +47,7 @@ Contract ABI [here](https://github.com/developer-decuple/DecupleNFT/blob/main/AB
 
 ## Decuple NFT Agent
 
-**Note:** Mint price will be 1000 USDT and reserve address will be defferent on the mainnet. 
+**Note:** Mint price will be 1000 USDT and reserve address will be different on the mainnet. 
 
 Contract address: [0x8Fc319929e4A1EBE7A58b5f86ADDd958026A493a](https://testnet.bscscan.com/address/0x8Fc319929e4A1EBE7A58b5f86ADDd958026A493a)
 
